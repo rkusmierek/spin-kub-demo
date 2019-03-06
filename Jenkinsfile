@@ -4,6 +4,10 @@ pipeline {
     environment {
         DOCKER_ID   = credentials('docker-id')
         DOCKER_PASS = credentials('docker-pass')
+        GIT_COMMIT_SHORT = sh(
+            script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
+            returnStdout: true
+        )
     }
 
     stages {
@@ -31,6 +35,8 @@ pipeline {
                 sh "make push-latest"
                 sh "make TAG=${env.BUILD_ID} tag"
                 sh "make TAG=${env.BUILD_ID} push-tag"
+                sh "make TAG=${GIT_COMMIT_SHORT} tag"
+                sh "make TAG=${GIT_COMMIT_SHORT} push-tag"
             }
         }
 
