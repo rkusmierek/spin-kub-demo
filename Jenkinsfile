@@ -33,8 +33,8 @@ pipeline {
         stage('Publish') {
             steps {
                 sh "make push-latest"
-                sh "make TAG=${env.BUILD_ID} tag"
-                sh "make TAG=${env.BUILD_ID} push-tag"
+                sh "make TAG=B${env.BUILD_ID} tag"
+                sh "make TAG=B${env.BUILD_ID} push-tag"
                 sh "make TAG=${GIT_COMMIT_SHORT} tag"
                 sh "make TAG=${GIT_COMMIT_SHORT} push-tag"
             }
